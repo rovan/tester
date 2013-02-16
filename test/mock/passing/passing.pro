@@ -8,9 +8,9 @@ QT       += testlib
 
 QT       -= gui
 
-TARGET = tst_passing
-CONFIG   += console
-CONFIG   -= app_bundle
+TARGET  = passing
+CONFIG += console
+CONFIG -= app_bundle
 
 TEMPLATE = app
 

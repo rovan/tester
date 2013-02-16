@@ -4,19 +4,22 @@
 #
 #-------------------------------------------------
 
-QT       += testlib
+QT     += testlib
+QT     -= gui
 
-QT       -= gui
-
-TARGET = tst_ttestsuittest
-CONFIG   += console
-CONFIG   -= app_bundle
+TARGET  = testsuit
+CONFIG += console
+CONFIG -= app_bundle
 
 TEMPLATE = app
 
+INCLUDEPATH = ./../../../library \
+              ./../../shared
 
 SOURCES += \
     tst_testsuit.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-DESTDIR = ./../../../output/tst/auto/testsuit
+DESTDIR = ./../../../output/tst/auto/
+
+LIBS += -L./../../../output/lib -ltester

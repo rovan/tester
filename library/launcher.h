@@ -2,34 +2,36 @@
 #define LAUNCHER_H
 
 #include <QObject>
+#include <QString>
+#include <QStringList>
 
-namespace test{
+#include "library_global.h"
 
-class TLauncher : public QObject
+class TESTER_EXPORT TLauncher : public QObject
 {
     Q_OBJECT
 public:
     explicit TLauncher(QObject *parent = 0);
     
-    void setExecutable(const QString& executable);
+    void setExecutable(const QString& value);
+
     QString executable() const;
+    QString directory() const;
+    QString fileName() const;
 
     QStringList arguments() const;
-    void clearArguments();
     void addArgument(const QString& argument);
+    void clearArguments();
 
-    QString lastReport() const;
+    void run();
 
 signals:
     void started();
-    void finished(const QString& report);
-public slots:
-    void run();
+    void finished(const QString& log);
 private:
-    QString Executable;
+    QString Directory;
+    QString FileName;
     QStringList Arguments;
-    QString Report;
 };
 
 #endif // LAUNCHER_H
-}

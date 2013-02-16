@@ -1,29 +1,14 @@
 #include "testplan.h"
 #include <QDir>
+#include <QFile>
 #include <QFileInfoList>
 #include "testsuit.h"
+#include "type.h"
 
-TTestPlan::TTestPlan(const QString& path)
-    : Path(path)
-    , Name(path)
+TTestPlan::TTestPlan(QObject *parent)
+    : QObject(parent)
 {
-    QDir dir(path);
-    if(dir.isReadable()){
-        QFileInfoList entries = dir.entryInfoList(QDir::Files);
 
-        for(QFileInfoList::iterator info = entries.begin(); info != entries.end(); ++info){
-            if(info->isExecutable()){
-                TTestSuit* suit = new TTestSuit(info->absolutePath());
-                Suits.append(suit);
-            }
-        }
-    }
-}
-
-TTestPlan::~TTestPlan(){
-    for(TTestSuitCollection::iterator i = Suits.begin(); i != Suits.end(); ++i){
-        delete *i;
-    }
 }
 
 QString TTestPlan::path() const{
@@ -41,4 +26,29 @@ void TTestPlan::startSuits(){
     for(TTestSuitCollection::iterator i = Suits.begin(); i != Suits.end(); ++i){
         (*i)->start();
     }
+}
+
+void TTestPlan::setPath(const QString& value){
+    Path = value;
+
+    QDir dir(Path);
+    if(dir.isReadable()){
+        Suits.clear();
+        QFileInfoList entries = dir.entryInfoList(QDir::Files);
+        for(QFileInfoList::iterator info = entries.begin(); info != entries.end(); ++info){
+            if(info->isExecutable()){
+                STestSuit suit(new TTestSuit(this));
+                suit->setExecutable(info->absoluteFilePath());
+                Suits.append(suit);
+            }
+        }
+    }
+}
+
+QStringList TTestPlan::executables() const{
+    QStringList result;
+    for(TTestSuitCollection::const_iterator i = Suits.constBegin(); i != Suits.constEnd(); ++i){
+        result.append((*i)->name());
+    }
+    return result;
 }

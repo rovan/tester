@@ -1,22 +1,24 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2013-02-06T00:49:41
+# Project created by QtCreator 2013-02-09T22:17:12
 #
 #-------------------------------------------------
 
 QT     += testlib
 QT     -= gui
 
-TARGET  = testplan
+TARGET  = launcher
 CONFIG += console
 CONFIG -= app_bundle
 
 TEMPLATE = app
 
-INCLUDEPATH = ./../../../library/ \
-              ./../../shared/
+INCLUDEPATH = ./../../../library \
+              ./../../shared
 
-SOURCES += tst_testplan.cpp
+HEADERS += ../../shared/shared.h
+
+SOURCES += tst_launcher.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 DESTDIR = ./../../../output/tst/auto/

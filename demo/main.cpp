@@ -1,16 +1,15 @@
-#include <QtCore/QCoreApplication>
+#include <QApplication>
 #include <QDebug>
-#include <testplan.h>
+
+#include <testplanform.h>
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QApplication a(argc, argv);
 
-    QString path = "D:\\project\\dataset\\debug\\tst\\auto\\dataset.exe";
-    TTestPlan plan(path);
-    TTestPlan p(path);
-    TTestPlan l(path);
+    TTestPlanForm form;
+    form.show();
 
-    return 0;
+    return a.exec();
 
 }

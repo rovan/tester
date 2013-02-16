@@ -1,45 +1,37 @@
-#ifndef TEST_H
-#define TEST_H
+#ifndef TESTSUIT_H
+#define TESTSUIT_H
+
+#include <QObject>
+#include <QString>
 
 #include "library_global.h"
-#include "testcase.h"
-#include <QString>
-#include <QObject>
-
-class TXmlError{
-public:
-    int Line;
-    int Column;
-    QString Message;
-};
+#include "type.h"
 
 class TESTER_EXPORT TTestSuit: public QObject
 {
     Q_OBJECT
 
-    enum SuitState
-       { Waiting
-       , Running
-       , Finished
-       };
-
 public:
-    TTestSuit(const QString& executable);
+    TTestSuit(QObject* parent);
 
+    void setExecutable(const QString& value);
+    QString name() const;
+    void setName(const QString& value);
     void start();
 
-    TTestResult result() const;
+    bool isPassed()   const;
+    bool isFailed()   const;
+    bool isErroneus() const;
 
-    bool isRunning() const;
-    bool isFinished() const;
+    QString log() const;
+
 signals:
     void started();
     void finished();
 private:
-    QString Executable;
-    TTestResult Result;
-    QString ExecutionLog;
-    SuitState State;
+    PLogProcessor LogProcessor;
+    PLauncher Launcher;
+    QString Name;
 };
 
-#endif // TEST_H
+#endif // TESTSUIT_H

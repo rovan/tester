@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    testcase \
     testplan \
-    testsuit
+    testsuit \
+    launcher \
+    logprocessor

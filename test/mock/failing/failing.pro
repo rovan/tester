@@ -8,9 +8,9 @@ QT       += testlib
 
 QT       -= gui
 
-TARGET = tst_failing
-CONFIG   += console
-CONFIG   -= app_bundle
+TARGET  = failing
+CONFIG += console
+CONFIG -= app_bundle
 
 TEMPLATE = app
 

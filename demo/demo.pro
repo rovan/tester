@@ -4,14 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core
-
-QT       -= gui
+QT       += core widgets
 
 TARGET  = demo
-CONFIG += debug
-CONFIG += console
-CONFIG -= app_bundle
 
 TEMPLATE = app
 

@@ -1,60 +1,53 @@
 #include "testsuit.h"
-#include <QProcess>
-#include <QProcessEnvironment>
-#include <QDomDocument>
-#include <QByteArray>
-#include <QStringList>
-#include <QDebug>
 
-TTestSuit::TTestSuit(const QString& executable)
-    : Executable(executable)
-    , State(TTestSuit::Waiting)
-{}
+#include "logprocessor.h"
+#include "launcher.h"
+
+TTestSuit::TTestSuit(QObject *parent)
+    : QObject(parent)
+    , LogProcessor(new TLogProcessor(this))
+    , Launcher(new TLauncher(this))
+{
+    connect(Launcher.data(), &TLauncher::finished, LogProcessor.data(), &TLogProcessor::process);
+    Launcher->addArgument("-xunitxml");
+}
 
 void TTestSuit::start(){
-    Result.clear();
-    State = TTestSuit::Running;
     emit started();
 
-    QProcess process;
-    process.setProcessEnvironment(QProcessEnvironment::systemEnvironment());
+    Launcher->run();
 
-    process.start(Executable, QStringList() << "-xunitxml");
-
-    if (!process.waitForFinished(-1)){
-        qDebug() << "Error executing" << Executable;
-    }
-
-    process.waitForReadyRead();
-    ExecutionLog = process.readAllStandardOutput();
-
-    TXmlError error;
-    QDomDocument document;
-    document.setContent(ExecutionLog, &error.Message, &error.Line, &error.Column);
-
-    if(error.Message.isEmpty()){
-        QDomElement root = document.firstChildElement("testsuit");
-        for(QDomElement element = root.firstChildElement("testcase"); !element.isNull(); element = element.nextSiblingElement("testcase")){
-            Result.append(TTestCase(element));
-
-        }
-    }else qDebug() << "Error reading xml report"
-                   << error.Message
-                   << error.Line
-                   << error.Column;
-
-    State = TTestSuit::Finished;
     emit finished();
 }
 
-TTestResult TTestSuit::result() const{
-    return Result;
+bool TTestSuit::isPassed() const{
+    return LogProcessor->state() == TLogProcessor::Passed;
 }
 
-bool TTestSuit::isRunning() const{
-    return State == TTestSuit::Running;
+bool TTestSuit::isFailed() const{
+    return LogProcessor->state() == TLogProcessor::Failed;
 }
 
-bool TTestSuit::isFinished() const{
-    return State == TTestSuit::Finished;
+bool TTestSuit::isErroneus() const{
+    return LogProcessor->state() == TLogProcessor::Erroneous;
+}
+
+
+QString TTestSuit::log() const{
+    return LogProcessor->log();
+}
+
+void TTestSuit::setExecutable(const QString& value){
+    Launcher->setExecutable(value);
+}
+
+QString TTestSuit::name() const{
+    if (Name.isNull())
+      return Launcher->fileName();
+    else
+      return Name;
+}
+
+void TTestSuit::setName(const QString& value){
+    Name = value;
 }

@@ -1,22 +1,27 @@
 #ifndef TESTPLAN_H
 #define TESTPLAN_H
 
-#include "library_global.h"
-#include <QList>
+#include <QObject>
 #include <QString>
+#include <QList>
 
-class TTestSuit;
-typedef QList<TTestSuit*> TTestSuitCollection;
+#include "library_global.h"
+#include "type.h"
 
-class TESTER_EXPORT TTestPlan
+class TESTER_EXPORT TTestPlan: public QObject
 {
+    Q_OBJECT
 public:
-    TTestPlan(const QString& path);
-    ~TTestPlan();
+    TTestPlan(QObject* parent = 0);
+
     QString path() const;
     QString name() const;
+
     TTestSuitCollection suits() const;
+    QStringList executables() const;
+public slots:
     void startSuits();
+    void setPath(const QString& value);
 private:
     QString Path;
     QString Name;
