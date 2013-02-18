@@ -19,6 +19,5 @@ INCLUDEPATH = ./../../../library/ \
 SOURCES += tst_testplan.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-DESTDIR = ./../../../output/tst/auto/
-
-LIBS += -L./../../../output/lib -ltester
+DESTDIR  = ./../../../output/tst/auto/
+   LIBS += -L./../../../output/lib -ltester

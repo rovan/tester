@@ -52,7 +52,7 @@ void TTestPlanTest::general_data(){
     QTest::addColumn<QStringList>("expected_executables");
 
     QStringList list;
-    list << "failing.exe" << "passing.exe";
+    list << "external.exe" << "failing.exe" << "passing.exe";
     QTest::newRow("empty path")  << Shared::noTestPath()      << QStringList();
     QTest::newRow("filled path") << Shared::existedTestPath() << list;
 }

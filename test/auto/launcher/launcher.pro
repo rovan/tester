@@ -21,6 +21,5 @@ HEADERS += ../../shared/shared.h
 SOURCES += tst_launcher.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-DESTDIR = ./../../../output/tst/auto/
-
-LIBS += -L./../../../output/lib -ltester
+DESTDIR  = ./../../../output/tst/auto/
+   LIBS += -L./../../../output/lib -ltester

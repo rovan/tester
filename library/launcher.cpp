@@ -2,6 +2,8 @@
 #include <QProcess>
 #include <QFileInfo>
 
+#include <QDebug>
+
 TLauncher::TLauncher(QObject *parent) :
     QObject(parent)
 {
@@ -35,7 +37,14 @@ void TLauncher::run(){
     emit started();
 
     QProcess process;
-    process.setProcessEnvironment(QProcessEnvironment::systemEnvironment());
+    process.setWorkingDirectory(Directory);
+    QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
+    if(!Library.isEmpty()){
+        QString path = environment.value("PATH");
+        path.append(";"+ Library);
+        environment.insert("PATH", path);
+    }
+    process.setProcessEnvironment(environment);
     process.start(executable(), Arguments);
     process.waitForFinished(-1);
     process.waitForReadyRead();
@@ -50,4 +59,13 @@ QString TLauncher::fileName() const{
 
 QString TLauncher::directory() const{
     return Directory;
+}
+
+
+QString TLauncher::library() const{
+    return Library;
+}
+
+void TLauncher::setLibrary(const QString& value){
+    Library = value;
 }

@@ -8,8 +8,15 @@ TTestSuit::TTestSuit(QObject *parent)
     , LogProcessor(new TLogProcessor(this))
     , Launcher(new TLauncher(this))
 {
-    connect(Launcher.data(), &TLauncher::finished, LogProcessor.data(), &TLogProcessor::process);
+    connect(Launcher, &TLauncher::finished, LogProcessor, &TLogProcessor::process);
     Launcher->addArgument("-xunitxml");
+}
+
+TTestSuit::~TTestSuit(){
+    delete LogProcessor;
+    LogProcessor = NULL;
+    delete Launcher;
+    Launcher = NULL;
 }
 
 void TTestSuit::start(){
@@ -50,4 +57,8 @@ QString TTestSuit::name() const{
 
 void TTestSuit::setName(const QString& value){
     Name = value;
+}
+
+void TTestSuit::setLibrary(const QString& value){
+    Launcher->setLibrary(value);
 }

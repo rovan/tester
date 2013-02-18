@@ -15,6 +15,9 @@ public:
     
     void setExecutable(const QString& value);
 
+    QString library() const;
+    void setLibrary(const QString& value);
+
     QString executable() const;
     QString directory() const;
     QString fileName() const;
@@ -32,6 +35,7 @@ private:
     QString Directory;
     QString FileName;
     QStringList Arguments;
+    QString Library;
 };
 
 #endif // LAUNCHER_H

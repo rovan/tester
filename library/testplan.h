@@ -19,12 +19,16 @@ public:
 
     TTestSuitCollection suits() const;
     QStringList executables() const;
+signals:
+    void finished();
 public slots:
     void startSuits();
     void setPath(const QString& value);
+    void setLibraryPath(const QString& value);
 private:
     QString Path;
     QString Name;
+    QString Library;
     TTestSuitCollection Suits;
 };
 

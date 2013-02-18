@@ -20,8 +20,7 @@ SOURCES += \
     testsuit.cpp \
     logprocessor.cpp \
     testplanform.cpp \
-    testview.cpp \
-    viewcontainer.cpp
+    testmodel.cpp
 
 HEADERS += \
     library.h\
@@ -32,8 +31,7 @@ HEADERS += \
     testplan.h \
     logprocessor.h \
     testplanform.h \
-    testview.h \
-    viewcontainer.h
+    testmodel.h
 
 DESTDIR = ./../output/lib/
 

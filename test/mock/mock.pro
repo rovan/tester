@@ -2,4 +2,5 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     failing \
-    passing
+    passing \
+    external

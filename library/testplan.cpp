@@ -26,6 +26,8 @@ void TTestPlan::startSuits(){
     for(TTestSuitCollection::iterator i = Suits.begin(); i != Suits.end(); ++i){
         (*i)->start();
     }
+
+    emit finished();
 }
 
 void TTestPlan::setPath(const QString& value){
@@ -34,10 +36,10 @@ void TTestPlan::setPath(const QString& value){
     QDir dir(Path);
     if(dir.isReadable()){
         Suits.clear();
-        QFileInfoList entries = dir.entryInfoList(QDir::Files);
+        QFileInfoList entries = dir.entryInfoList(QDir::Files, QDir::Name);
         for(QFileInfoList::iterator info = entries.begin(); info != entries.end(); ++info){
             if(info->isExecutable()){
-                STestSuit suit(new TTestSuit(this));
+                TTestSuit* suit(new TTestSuit(this));
                 suit->setExecutable(info->absoluteFilePath());
                 Suits.append(suit);
             }
@@ -51,4 +53,12 @@ QStringList TTestPlan::executables() const{
         result.append((*i)->name());
     }
     return result;
+}
+
+void TTestPlan::setLibraryPath(const QString& value){
+    Library = value;
+
+    for(TTestSuitCollection::iterator i = Suits.begin(); i != Suits.end(); ++i){
+        (*i)->setLibrary(Library);
+    }
 }

@@ -1,13 +1,11 @@
 #include "testplanform.h"
 
 #include <QFileDialog>
-#include <QGraphicsScene>
-#include <QGraphicsGridLayout>
+#include <QStandardItemModel>
 
-#include "viewcontainer.h"
 #include "testplan.h"
-#include "testview.h"
 #include "testsuit.h"
+#include "testmodel.h"
 
 #include "ui_tester.h"
 
@@ -15,40 +13,39 @@ TTestPlanForm::TTestPlanForm(QWidget* parent)
     : QWidget(parent)
     , Plan(new TTestPlan)
     , UI(new Ui::TTestPlan)
+    , TestModel(new TTestModel(this))
 {
+    TestModel->setPlan(Plan);
     UI->setupUi(this);
-    UI->pathSelector->setDefaultAction(UI->selectPathAction);
+    UI->testPathSelector->setDefaultAction(UI->selectTestAction);
+    UI->libraryPathSelector->setDefaultAction(UI->selectLibraryAction);
     UI->startTrigger->setDefaultAction(UI->startAction);
-    UI->testView->setScene(new QGraphicsScene(this));
+    UI->testView->setModel(TestModel);
+    UI->testView->verticalHeader()->hide();
+    UI->testView->horizontalHeader()->hide();
 
-    ItemContainer = new TViewContainer();
-    UI->testView->scene()->addItem(ItemContainer);
-    ItemContainer->setPos(0,0);
-
-    connect(UI->startAction     , &QAction::triggered, Plan.data(), &TTestPlan::startSuits);
-    connect(UI->selectPathAction, &QAction::triggered, this, &TTestPlanForm::selectTestPath);
-    connect(UI->pathEditor      , &QLineEdit::textChanged, Plan.data(), &TTestPlan::setPath);
+    connect(UI->startAction        , &QAction::triggered    , Plan, &TTestPlan::startSuits);
+    connect(UI->selectTestAction   , &QAction::triggered    , this, &TTestPlanForm::selectTestPath);
+    connect(UI->selectLibraryAction, &QAction::triggered    , this, &TTestPlanForm::selectLibraryPath);
+    connect(UI->testPathEditor     , &QLineEdit::textChanged, Plan, &TTestPlan::setPath);
+    connect(UI->libraryPathEditor  , &QLineEdit::textChanged, Plan, &TTestPlan::setLibraryPath);
 }
 
 void TTestPlanForm::selectTestPath(){
-    QFileDialog dialog(this, tr("Choose test directory"));
+
+    processSelection(tr("Choose test directory"), UI->testPathEditor);
+    TestModel->updateItems();
+}
+
+void TTestPlanForm::selectLibraryPath(){
+    processSelection(tr("Choose library directory"), UI->libraryPathEditor);
+}
+
+void TTestPlanForm::processSelection(const QString& title, QLineEdit* editor){
+    QFileDialog dialog(this, title);
 
     dialog.setFileMode(QFileDialog::Directory);
     if(dialog.exec() == QDialog::Accepted){
-        UI->pathEditor->setText(dialog.selectedFiles().takeFirst());
-
-        ItemContainer->clear();
-
-        TTestSuitCollection suits = Plan->suits();
-
-        for(TTestSuitCollection::iterator suit = suits.begin(); suit != suits.end(); ++suit){
-            TTestView* view = new TTestView(suit->data(), ItemContainer);
-            ItemContainer->addItem(view);
-            view->setVisible(true);
-        }
+        editor->setText(dialog.selectedFiles().takeFirst());
     }
-}
-
-TTestPlanForm::~TTestPlanForm(){
-
 }

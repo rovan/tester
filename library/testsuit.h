@@ -13,10 +13,15 @@ class TESTER_EXPORT TTestSuit: public QObject
 
 public:
     TTestSuit(QObject* parent);
-
+    ~TTestSuit();
+    QString executable() const;
     void setExecutable(const QString& value);
+
     QString name() const;
     void setName(const QString& value);
+
+    void setLibrary(const QString& value);
+
     void start();
 
     bool isPassed()   const;
@@ -29,9 +34,9 @@ signals:
     void started();
     void finished();
 private:
-    PLogProcessor LogProcessor;
-    PLauncher Launcher;
-    QString Name;
+    TLogProcessor* LogProcessor;
+    TLauncher*     Launcher;
+    QString        Name;
 };
 
 #endif // TESTSUIT_H

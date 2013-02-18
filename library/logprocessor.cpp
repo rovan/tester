@@ -1,5 +1,6 @@
 #include "logprocessor.h"
 #include <QDataStream>
+#include <QDebug>
 
 class TXmlError{
 public:
@@ -31,6 +32,8 @@ void TLogProcessor::process(const QString& log){
     const TLogProcessor::TestState previous_state = State;
 
     Log = log;
+
+//    qDebug() << Log;
 
     if(previous_log != Log)
         emit logChanged(previous_log, Log);

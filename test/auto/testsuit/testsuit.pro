@@ -20,6 +20,5 @@ SOURCES += \
     tst_testsuit.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-DESTDIR = ./../../../output/tst/auto/
-
-LIBS += -L./../../../output/lib -ltester
+DESTDIR  = ./../../../output/tst/auto/
+   LIBS += -L./../../../output/lib -ltester

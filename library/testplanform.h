@@ -9,23 +9,26 @@ namespace Ui{
     class TTestPlan;
 }
 
-class TViewContainer;
+class QLineEdit;
+class TTestModel;
 
 class TESTER_EXPORT TTestPlanForm : public QWidget
 {
     Q_OBJECT
 public:
     explicit TTestPlanForm(QWidget* parent = 0);
-    ~TTestPlanForm();
 signals:
     
 public slots:
     void selectTestPath();
+    void selectLibraryPath();
+protected:
+    void processSelection(const QString& title, QLineEdit* editor);
 
 private:
-    STestPlan            Plan;
-    TViewContainer*      ItemContainer;
-    Ui::TTestPlan*       UI;
+    TTestPlan*      Plan;
+    Ui::TTestPlan* UI;
+    TTestModel*    TestModel;
 };
 
 #endif // TESTPLANFORM_H

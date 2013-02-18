@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>629</width>
-    <height>483</height>
+    <height>503</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,34 +15,106 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="testPathLayout">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
+    <layout class="QFormLayout" name="formLayout">
+     <property name="fieldGrowthPolicy">
+      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
      </property>
-     <item>
-      <widget class="QToolButton" name="startTrigger">
+     <property name="horizontalSpacing">
+      <number>6</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="testLabel">
        <property name="text">
-        <string>...</string>
+        <string>Test path:</string>
+       </property>
+       <property name="buddy">
+        <cstring>testPathEditor</cstring>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QLineEdit" name="pathEditor"/>
+     <item row="0" column="1">
+      <layout class="QHBoxLayout" name="testLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLineEdit" name="testPathEditor"/>
+       </item>
+       <item>
+        <widget class="QToolButton" name="testPathSelector">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
-     <item>
-      <widget class="QToolButton" name="pathSelector">
+     <item row="1" column="0">
+      <widget class="QLabel" name="libraryLabel">
        <property name="text">
-        <string>...</string>
+        <string>Library path:</string>
+       </property>
+       <property name="buddy">
+        <cstring>libraryPathEditor</cstring>
        </property>
       </widget>
+     </item>
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="libraryLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLineEdit" name="libraryPathEditor"/>
+       </item>
+       <item>
+        <widget class="QToolButton" name="libraryPathSelector">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QGraphicsView" name="testView"/>
+    <widget class="QToolButton" name="startTrigger">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>...</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableView" name="testView">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <attribute name="horizontalHeaderCascadingSectionResizes">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+    </widget>
    </item>
   </layout>
-  <action name="selectPathAction">
+  <action name="selectTestAction">
    <property name="text">
     <string>...</string>
    </property>
@@ -58,6 +130,13 @@
     <string>Starts test exucution</string>
    </property>
   </action>
+  <action name="selectLibraryAction">
+   <property name="text">
+    <string>...</string>
+   </property>
+  </action>
+  <zorder>testView</zorder>
+  <zorder>startTrigger</zorder>
  </widget>
  <resources/>
  <connections/>
