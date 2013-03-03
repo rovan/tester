@@ -49,27 +49,28 @@ TLogProcessorTest::TLogProcessorTest()
 void TLogProcessorTest::general_data()
 {
     QTest::addColumn<QString>("expected_log");
-    QTest::addColumn<TLogProcessor::TestState>("expected_state");
+    QTest::addColumn<Tester::Kernel::LogProcessor::TestState>("expected_state");
     QTest::addColumn<int>("expected_log_changes");
     QTest::addColumn<int>("expected_state_changes");
 
-    QTest::newRow("erroneous") << Shared::errorLog()  << TLogProcessor::Erroneous << 0 << 0;
-    QTest::newRow("failing")   << Shared::failedLog() << TLogProcessor::Failed    << 1 << 1;
-    QTest::newRow("passing")   << Shared::passedLog() << TLogProcessor::Passed    << 1 << 1;
+    QTest::newRow("erroneous") << Shared::errorLog()  << Tester::Kernel::LogProcessor::Erroneous << 0 << 0;
+    QTest::newRow("failing")   << Shared::failedLog() << Tester::Kernel::LogProcessor::Failed    << 1 << 1;
+    QTest::newRow("passing")   << Shared::passedLog() << Tester::Kernel::LogProcessor::Passed    << 1 << 1;
 }
 
 
 void TLogProcessorTest::general()
 {
     QFETCH(QString, expected_log);
-    QFETCH(TLogProcessor::TestState, expected_state);
+    QFETCH(Tester::Kernel::LogProcessor::TestState, expected_state);
     QFETCH(int, expected_log_changes);
     QFETCH(int, expected_state_changes);
 
-    TLogProcessor processor;
+    Tester::Kernel::LogProcessor processor;
 
     QSignalSpy log_spy(&processor, SIGNAL(logChanged(const QString&, const QString&)));
-    QSignalSpy state_spy(&processor, SIGNAL(stateChanged(const TLogProcessor::TestState&, const TLogProcessor::TestState&)));
+    QSignalSpy state_spy(&processor, SIGNAL(stateChanged( const Tester::Kernel::LogProcessor::TestState&
+                                                        , const Tester::Kernel::LogProcessor::TestState&)));
     processor.process(expected_log);
 
     TTestHelper::propertyChange<QString>( log_spy
@@ -80,12 +81,12 @@ void TLogProcessorTest::general()
                                         );
 
 
-    TTestHelper::propertyChange<TLogProcessor::TestState>( state_spy
-                                                         , processor.state()
-                                                         , expected_state
-                                                         , expected_state_changes
-                                                         , TLogProcessor::Erroneous
-                                                         );
+    TTestHelper::propertyChange<Tester::Kernel::LogProcessor::TestState>( state_spy
+                                                                      , processor.state()
+                                                                      , expected_state
+                                                                      , expected_state_changes
+                                                                      , Tester::Kernel::LogProcessor::Erroneous
+                                                                      );
 }
 
 QTEST_APPLESS_MAIN(TLogProcessorTest)

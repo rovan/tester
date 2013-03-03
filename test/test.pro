@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS += \
-    auto \
-    mock \
-	shared
+SUBDIRS += shared \
+           auto \
+           mock
+

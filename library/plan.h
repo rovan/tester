@@ -8,17 +8,22 @@
 #include "library_global.h"
 #include "type.h"
 
-class TESTER_EXPORT TTestPlan: public QObject
+namespace Tester{
+namespace Kernel{
+
+class TESTER_EXPORT Plan: public QObject
 {
     Q_OBJECT
 public:
-    TTestPlan(QObject* parent = 0);
+    Plan(QObject* parent = 0);
 
     QString path() const;
+    QString library() const;
     QString name() const;
 
-    TTestSuitCollection suits() const;
+    Tester::Kernel::SuitCollection suits() const;
     QStringList executables() const;
+    void scanPath();
 signals:
     void finished();
 public slots:
@@ -29,7 +34,9 @@ private:
     QString Path;
     QString Name;
     QString Library;
-    TTestSuitCollection Suits;
+    Tester::Kernel::SuitCollection Suits;
 };
+}
+}
 
 #endif // TESTPLAN_H

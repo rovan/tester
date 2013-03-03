@@ -2,7 +2,7 @@
 #include <QString>
 #include <QSignalSpy>
 
-#include <testsuit.h>
+#include <suit.h>
 
 #include <shared.h>
 
@@ -40,7 +40,7 @@ void TTestSuitTest::general()
     QFETCH(bool, expected_failed);
     QFETCH(bool, expected_erroneous);
 
-    TTestSuit suit(this);
+    Tester::Kernel::Suit suit(this);
     suit.setExecutable(executable);
     QSignalSpy started_spy(&suit, SIGNAL(started()));
     QSignalSpy finished_spy(&suit, SIGNAL(finished()));

@@ -7,13 +7,17 @@
 #include "library_global.h"
 #include "type.h"
 
-class TESTER_EXPORT TTestSuit: public QObject
+
+namespace Tester{
+namespace Kernel{
+
+class TESTER_EXPORT Suit: public QObject
 {
     Q_OBJECT
 
 public:
-    TTestSuit(QObject* parent);
-    ~TTestSuit();
+    Suit(QObject* parent);
+    ~Suit();
     QString executable() const;
     void setExecutable(const QString& value);
 
@@ -34,9 +38,11 @@ signals:
     void started();
     void finished();
 private:
-    TLogProcessor* LogProcessor;
-    TLauncher*     Launcher;
-    QString        Name;
+    Tester::Kernel::LogProcessor* LogProcessor;
+    Tester::Kernel::Launcher*     Launcher;
+    QString                     Name;
 };
 
+}
+}
 #endif // TESTSUIT_H

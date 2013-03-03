@@ -5,20 +5,17 @@
 #include <QPointer>
 #include <QSharedPointer>
 
-class TLogProcessor;
-class TLauncher;
-class TTestSuit;
-class TTestPlan;
+namespace Tester{
+namespace Kernel{
 
-//typedef QPointer<TLogProcessor> PLogProcessor;
-//typedef QPointer<TLauncher> PLauncher;
-//typedef QPointer<TTestSuit> PTestSuit;
+class LogProcessor;
+class Launcher;
+class Suit;
+class Plan;
 
-//typedef QSharedPointer<TLogProcessor> SLogProcessor;
-//typedef QSharedPointer<TLauncher>     SLauncher;
-//typedef QSharedPointer<TTestSuit>     STestSuit;
-//typedef QSharedPointer<TTestPlan>     STestPlan;
+typedef QList<Suit*> SuitCollection;
 
-typedef QList<TTestSuit*> TTestSuitCollection;
+}
+}
 
 #endif // TYPE_H

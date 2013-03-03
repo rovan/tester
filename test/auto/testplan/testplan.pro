@@ -7,7 +7,7 @@
 QT     += testlib
 QT     -= gui
 
-TARGET  = testplan
+TARGET  = plan
 CONFIG += console
 CONFIG -= app_bundle
 

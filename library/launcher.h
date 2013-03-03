@@ -7,12 +7,15 @@
 
 #include "library_global.h"
 
-class TESTER_EXPORT TLauncher : public QObject
+namespace Tester{
+namespace Kernel{
+
+class TESTER_EXPORT Launcher : public QObject
 {
     Q_OBJECT
 public:
-    explicit TLauncher(QObject *parent = 0);
-    
+    explicit Launcher(QObject *parent = 0);
+
     void setExecutable(const QString& value);
 
     QString library() const;
@@ -37,5 +40,9 @@ private:
     QStringList Arguments;
     QString Library;
 };
+
+}
+}
+
 
 #endif // LAUNCHER_H

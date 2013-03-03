@@ -3,4 +3,5 @@ TEMPLATE = subdirs
 SUBDIRS += \
     library \
     demo \
-    test
+    test \
+    plugin/testerplugin.pro

@@ -1,14 +1,17 @@
 #include <QApplication>
 #include <QDebug>
 
-#include <testplanform.h>
+#include <planwidget.h>
+#include <controller.h>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    TTestPlanForm form;
-    form.show();
+    Tester::Gui::Controller c;
+    Tester::Gui::PlanWidget v;
+    v.setController(&c);
+    v.show();
 
     return a.exec();
 

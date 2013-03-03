@@ -7,7 +7,7 @@
 QT     += testlib
 QT     -= gui
 
-TARGET  = testsuit
+TARGET  = suit
 CONFIG += console
 CONFIG -= app_bundle
 

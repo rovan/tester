@@ -8,7 +8,10 @@
 
 class QDataStream;
 
-class TESTER_EXPORT TLogProcessor : public QObject
+namespace Tester{
+namespace Kernel{
+
+class TESTER_EXPORT LogProcessor : public QObject
 {
     Q_OBJECT
     Q_ENUMS(TestState)
@@ -20,10 +23,10 @@ public:
        };
 signals:
     void   logChanged(const QString& previous                 , const QString& current);
-    void stateChanged(const TLogProcessor::TestState& previous, const TLogProcessor::TestState& current);
+    void stateChanged(const Tester::Kernel::LogProcessor::TestState& previous, const Tester::Kernel::LogProcessor::TestState& current);
 
 public:
-    explicit TLogProcessor(QObject *parent = 0);
+    explicit LogProcessor(QObject *parent = 0);
 
     QDomDocument document() const;
     QString      log()      const;
@@ -37,9 +40,12 @@ private:
     QDomDocument Document;
 };
 
-QDataStream& operator<<(QDataStream& stream, const TLogProcessor::TestState& data);
-QDataStream& operator>>(QDataStream& stream, TLogProcessor::TestState& data);
+}
+}
 
-Q_DECLARE_METATYPE(TLogProcessor::TestState)
+QDataStream& operator<<(QDataStream& stream, const Tester::Kernel::LogProcessor::TestState& data);
+QDataStream& operator>>(QDataStream& stream, Tester::Kernel::LogProcessor::TestState& data);
+
+Q_DECLARE_METATYPE(Tester::Kernel::LogProcessor::TestState)
 
 #endif // LOGPROCESSOR_H

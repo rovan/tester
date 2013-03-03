@@ -3,13 +3,15 @@
 #include <QFileInfo>
 
 #include <QDebug>
+namespace Tester{
+namespace Kernel{
 
-TLauncher::TLauncher(QObject *parent) :
+Launcher::Launcher(QObject *parent) :
     QObject(parent)
 {
 }
 
-void TLauncher::setExecutable(const QString& value){
+void Launcher::setExecutable(const QString& value){
     if(executable() != value){
         QFileInfo info(value);
         Directory = info.absolutePath();
@@ -17,23 +19,23 @@ void TLauncher::setExecutable(const QString& value){
     }
 }
 
-QString TLauncher::executable() const{
+QString Launcher::executable() const{
     return Directory + "/" + FileName;
 }
 
-QStringList TLauncher::arguments() const{
+QStringList Launcher::arguments() const{
     return Arguments;
 }
 
-void TLauncher::clearArguments(){
+void Launcher::clearArguments(){
     Arguments.clear();
 }
 
-void TLauncher::addArgument(const QString& argument){
+void Launcher::addArgument(const QString& argument){
     Arguments.append(argument);
 }
 
-void TLauncher::run(){
+void Launcher::run(){
     emit started();
 
     QProcess process;
@@ -53,19 +55,22 @@ void TLauncher::run(){
     emit finished(log);
 }
 
-QString TLauncher::fileName() const{
+QString Launcher::fileName() const{
     return FileName;
 }
 
-QString TLauncher::directory() const{
+QString Launcher::directory() const{
     return Directory;
 }
 
 
-QString TLauncher::library() const{
+QString Launcher::library() const{
     return Library;
 }
 
-void TLauncher::setLibrary(const QString& value){
+void Launcher::setLibrary(const QString& value){
     Library = value;
+}
+
+}
 }

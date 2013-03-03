@@ -1,19 +1,22 @@
-#include "testmodel.h"
+#include "viewmodel.h"
 #include <QStandardItem>
 #include <QColor>
 
-#include "testplan.h"
-#include "testsuit.h"
+#include "plan.h"
+#include "suit.h"
 #include <QDebug>
 
-TTestModel::TTestModel(QObject *parent)
+namespace Tester{
+namespace Gui{
+
+ViewModel::ViewModel(QObject *parent)
     : QStandardItemModel(parent)
     , Plan(NULL)
 {
 }
 
 
-void TTestModel::setPlan(TTestPlan *value){
+void ViewModel::setPlan(Tester::Kernel::Plan* value){
     if(Plan != value){
         if(Plan){
             Plan->disconnect(this);
@@ -24,7 +27,7 @@ void TTestModel::setPlan(TTestPlan *value){
         Plan = value;
 
         if(Plan){
-            connect(Plan, &TTestPlan::finished, this, &TTestModel::updateState);
+            connect(Plan, &Tester::Kernel::Plan::finished, this, &ViewModel::updateState);
         }
 
         updateItems();
@@ -32,13 +35,13 @@ void TTestModel::setPlan(TTestPlan *value){
     }
 }
 
-void TTestModel::updateItems(){
+void ViewModel::updateItems(){
 
     clear();
     ItemContainer.clear();
     if(Plan){
-        TTestSuitCollection suits = Plan->suits();
-        for(TTestSuitCollection::iterator suit = suits.begin(); suit != suits.end(); ++suit){
+        Tester::Kernel::SuitCollection suits = Plan->suits();
+        for(Tester::Kernel::SuitCollection::iterator suit = suits.begin(); suit != suits.end(); ++suit){
             QStandardItem* item = new QStandardItem((*suit)->name());
             item->setTextAlignment(Qt::AlignCenter);
             ItemContainer.insert(*suit, item);
@@ -47,9 +50,9 @@ void TTestModel::updateItems(){
     }
 }
 
-void TTestModel::updateState(){
+void ViewModel::updateState(){
     for(ItemCollection::iterator v = ItemContainer.begin(); v != ItemContainer.end(); ++v){
-        TTestSuit* suit = v.key();
+        Tester::Kernel::Suit* suit = v.key();
         QStandardItem* item = v.value();
         qDebug() << suit->log();
         if(suit->isErroneus()){
@@ -60,4 +63,6 @@ void TTestModel::updateState(){
             item->setData(QColor("yellowgreen"), Qt::BackgroundColorRole);
         }
     }
+}
+}
 }

@@ -1,0 +1,11 @@
+<plugin name=\"TesterPlugin\" version=\"0.0.1\" compatVersion=\"0.0.1\">
+    <vendor>drake</vendor>
+    <copyright>(C) drake</copyright>
+    <license>LGPL</license>
+    <description>Put a short description of your plugin here</description>
+    <url>http://www.mycompany.com</url>
+    <dependencyList>
+        <dependency name=\"Core\" version=\"$$QTCREATOR_VERSION\"/>
+    </dependencyList>
+</plugin>
+

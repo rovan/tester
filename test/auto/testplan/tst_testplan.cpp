@@ -2,8 +2,8 @@
 #include <QString>
 #include <QStringList>
 
-#include <testplan.h>
-#include <testsuit.h>
+#include <plan.h>
+#include <suit.h>
 #include <shared.h>
 /*
 bool operator==(const QStringList& left, const QStringList& right){
@@ -41,8 +41,9 @@ void TTestPlanTest::general(){
     QFETCH(QString, test_path);
     QFETCH(QStringList, expected_executables);
 
-    TTestPlan plan(this);
+    Tester::Kernel::Plan plan(this);
     plan.setPath(test_path);
+    plan.scanPath();
 
     QCOMPARE(plan.executables(), expected_executables);
 }

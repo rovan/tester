@@ -8,7 +8,6 @@
 
 #include <shared.h>
 
-
 class TLauncherTest : public QObject
 {
     Q_OBJECT
@@ -48,7 +47,7 @@ void TLauncherTest::general()
     QFETCH(QString, library);
     QFETCH(QString, expected_report);
 
-    TLauncher launcher;
+    Tester::Kernel::Launcher launcher;
     launcher.setExecutable(executable);
     launcher.addArgument(argument);
     launcher.setLibrary(library);

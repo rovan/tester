@@ -9,27 +9,31 @@ public:
     QString Message;
 };
 
-TLogProcessor::TLogProcessor(QObject *parent)
+namespace Tester{
+namespace Kernel{
+
+
+LogProcessor::LogProcessor(QObject *parent)
     : QObject(parent)
-    , State(TLogProcessor::Erroneous)
+    , State(LogProcessor::Erroneous)
 {
 }
 
-QDomDocument TLogProcessor::document() const{
+QDomDocument LogProcessor::document() const{
     return Document;
 }
 
-QString TLogProcessor::log() const{
+QString LogProcessor::log() const{
     return Log;
 }
 
-TLogProcessor::TestState TLogProcessor::state() const{
+LogProcessor::TestState LogProcessor::state() const{
     return State;
 }
 
-void TLogProcessor::process(const QString& log){
+void LogProcessor::process(const QString& log){
     const QString previous_log = Log;
-    const TLogProcessor::TestState previous_state = State;
+    const LogProcessor::TestState previous_state = State;
 
     Log = log;
 
@@ -42,30 +46,32 @@ void TLogProcessor::process(const QString& log){
     Document.setContent(Log, &error.Message, &error.Line, &error.Column);
 
     if(!error.Message.isEmpty()){
-        State = TLogProcessor::Erroneous;
+        State = LogProcessor::Erroneous;
     }else{
         const int failure_count = Document.firstChildElement().attribute("failures").toInt();
         const int error_count   = Document.firstChildElement().attribute("errors").toInt();
 
         if(failure_count > 0){
-            State = TLogProcessor::Failed;
+            State = LogProcessor::Failed;
         }else if(error_count > 0){
-            State = TLogProcessor::Erroneous;
+            State = LogProcessor::Erroneous;
         }else{
-            State = TLogProcessor::Passed;
+            State = LogProcessor::Passed;
         }
     }
     if(previous_state != State)
         emit stateChanged(previous_state, State);
 }
+}
+}
 
-QDataStream& operator<<(QDataStream& stream, const TLogProcessor::TestState& data){
+QDataStream& operator<<(QDataStream& stream, const Tester::Kernel::LogProcessor::TestState& data){
     return stream << int(data);
 }
 
-QDataStream& operator>>(QDataStream& stream, TLogProcessor::TestState& data){
+QDataStream& operator>>(QDataStream& stream, Tester::Kernel::LogProcessor::TestState& data){
     int state;
     stream >> state;
-    data = TLogProcessor::TestState(state);
+    data = Tester::Kernel::LogProcessor::TestState(state);
     return stream;
 }
