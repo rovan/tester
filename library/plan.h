@@ -17,23 +17,27 @@ class TESTER_EXPORT Plan: public QObject
 public:
     Plan(QObject* parent = 0);
 
-    QString path() const;
-    QString library() const;
+    QString testPath() const;
+    QString libraryPath() const;
     QString name() const;
 
     Tester::Kernel::SuitCollection suits() const;
     QStringList executables() const;
     void scanPath();
+
+    Tester::Kernel::Suit* suit(const QString& name);
+    const Tester::Kernel::Suit* suit(const QString& name) const;
+
 signals:
     void finished();
 public slots:
     void startSuits();
-    void setPath(const QString& value);
+    void setTestPath(const QString& value);
     void setLibraryPath(const QString& value);
 private:
-    QString Path;
     QString Name;
-    QString Library;
+    QString TestPath;
+    QString LibraryPath;
     Tester::Kernel::SuitCollection Suits;
 };
 }

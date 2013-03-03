@@ -14,12 +14,12 @@ Plan::Plan(QObject *parent)
 
 }
 
-QString Plan::path() const{
-    return Path;
+QString Plan::testPath() const{
+    return TestPath;
 }
 
-QString Plan::library() const{
-    return Library;
+QString Plan::libraryPath() const{
+    return LibraryPath;
 }
 
 QString Plan::name() const{
@@ -40,7 +40,7 @@ void Plan::startSuits(){
 
 void Plan::scanPath()
 {
-    QDir dir(Path);
+    QDir dir(TestPath);
     if(dir.isReadable()){
         Suits.clear();
         QFileInfoList entries = dir.entryInfoList(QDir::Files, QDir::Name);
@@ -54,8 +54,8 @@ void Plan::scanPath()
     }
 }
 
-void Plan::setPath(const QString& value){
-    Path = value;
+void Plan::setTestPath(const QString& value){
+    TestPath = value;
 }
 
 QStringList Plan::executables() const{
@@ -67,11 +67,30 @@ QStringList Plan::executables() const{
 }
 
 void Plan::setLibraryPath(const QString& value){
-    Library = value;
+    LibraryPath = value;
 
     for(Tester::Kernel::SuitCollection::iterator i = Suits.begin(); i != Suits.end(); ++i){
-        (*i)->setLibrary(Library);
+        (*i)->setLibraryPath(LibraryPath);
     }
 }
+
+Tester::Kernel::Suit* Plan::suit(const QString& name){
+    for(Tester::Kernel::SuitCollection::iterator i = Suits.begin(); i != Suits.end(); ++i){
+        if((*i)->name() == name){
+            return *i;
+        }
+    }
+    return NULL;
+}
+
+const Tester::Kernel::Suit* Plan::suit(const QString& name) const{
+    for(Tester::Kernel::SuitCollection::const_iterator i = Suits.constBegin(); i != Suits.constEnd(); ++i){
+        if((*i)->name() == name){
+            return *i;
+        }
+    }
+    return NULL;
+}
+
 }
 }

@@ -24,7 +24,8 @@ public:
 
     void setController(Tester::Gui::Controller* value);
 signals:
-
+protected slots:
+    void showTestLog(const QString& test_name);
 private:
     Ui::PlanWidget*          ui;
     QPointer<Tester::Gui::Controller> Controller;

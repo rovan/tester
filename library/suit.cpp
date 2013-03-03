@@ -62,7 +62,7 @@ void Suit::setName(const QString& value){
     Name = value;
 }
 
-void Suit::setLibrary(const QString& value){
+void Suit::setLibraryPath(const QString& value){
     Launcher->setLibrary(value);
 }
 }

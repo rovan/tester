@@ -32,6 +32,7 @@ public:
 
     QAbstractItemModel* viewModel() const;
 
+    QString suitLog(const QString& test_name) const;
 signals:
 
 public slots:

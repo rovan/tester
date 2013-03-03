@@ -45,11 +45,10 @@ bool Tester::Internal::Plugin::initialize(const QStringList &arguments, QString 
     Q_UNUSED(arguments)
     Q_UNUSED(errorString)
     
-    QAction *action = new QAction(tr("TesterPlugin action"), this);
-    Core::Command *cmd = Core::ActionManager::registerAction(action, Constants::ACTION_ID,
+    Core::Command *cmd = Core::ActionManager::registerAction(Controller->startAction(), Constants::ACTION_ID,
                                                              Core::Context(Core::Constants::C_GLOBAL));
     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Alt+Meta+A")));
-    connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
+    connect(Controller->startAction(), SIGNAL(triggered()), this, SLOT(triggerAction()));
     
     Core::ActionContainer *menu = Core::ActionManager::createMenu(Constants::MENU_ID);
     menu->menu()->setTitle(tr("TesterPlugin"));

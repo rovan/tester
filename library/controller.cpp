@@ -1,6 +1,7 @@
 #include "controller.h"
 #include <QAction>
 #include "plan.h"
+#include "suit.h"
 #include "viewmodel.h"
 
 namespace Tester{
@@ -19,11 +20,11 @@ Controller::Controller(QObject* parent)
 }
 
 QString Controller::libraryPath() const{
-    return Model->library();
+    return Model->libraryPath();
 }
 
 QString Controller::testPath() const{
-    return Model->path();
+    return Model->testPath();
 }
 
 void Controller::setLibraryPath(const QString& value){
@@ -31,7 +32,7 @@ void Controller::setLibraryPath(const QString& value){
 }
 
 void Controller::setTestPath(const QString& value){
-    Model->setPath(value);
+    Model->setTestPath(value);
     Model->scanPath();
     ViewModel->updateItems();
 }
@@ -40,8 +41,17 @@ QAction* Controller::startAction() const{
     return StartAction;
 }
 
-QAbstractItemModel *Controller::viewModel() const{
+QAbstractItemModel* Controller::viewModel() const{
     return ViewModel;
 }
+
+QString Controller::suitLog(const QString& test_name) const{
+    QString result;
+    if(Tester::Kernel::Suit* suit = Model->suit(test_name)){
+        result = suit->log();
+    }
+    return result;
+}
+
 }
 }

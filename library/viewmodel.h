@@ -28,8 +28,8 @@ public slots:
     void updateItems();
     void updateState();
 private:
-    ItemCollection ItemContainer;
-    Tester::Kernel::Plan*     Plan;
+    ItemCollection        ItemContainer;
+    Tester::Kernel::Plan* Plan;
 };
 
 }

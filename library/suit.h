@@ -24,7 +24,7 @@ public:
     QString name() const;
     void setName(const QString& value);
 
-    void setLibrary(const QString& value);
+    void setLibraryPath(const QString& value);
 
     void start();
 

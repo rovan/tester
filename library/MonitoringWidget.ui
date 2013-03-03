@@ -28,7 +28,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QListView" name="testView"/>
+    <widget class="QListView" name="testView">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

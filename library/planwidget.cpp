@@ -16,6 +16,7 @@ PlanWidget::PlanWidget(QWidget* parent)
     , Controller(NULL)
 {
     ui->setupUi(this);
+    connect(ui->MonitoringView, &Tester::Gui::MonitoringWidget::currentTest, this, &Tester::Gui::PlanWidget::showTestLog);
 }
 
 void PlanWidget::setController(Tester::Gui::Controller* value){
@@ -28,6 +29,10 @@ void PlanWidget::setController(Tester::Gui::Controller* value){
             ui->MonitoringView->setController(Controller);
         }
     }
+}
+
+void PlanWidget::showTestLog(const QString& test_name){
+    ui->logView->setText(Controller->suitLog(test_name));
 }
 
 }

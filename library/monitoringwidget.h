@@ -23,8 +23,9 @@ public:
 
     void setController(const Tester::Gui::Controller* value);
 signals:
-
-public slots:
+    void currentTest(const QString& name);
+protected slots:
+    void processActivation(const QModelIndex& index);
 private:
     Ui::MonitoringWidget* ui;
 };
